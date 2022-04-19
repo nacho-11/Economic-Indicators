@@ -7,7 +7,7 @@ import { IndicatorCard } from '../components'
 import { fetchIndicators } from '../ducks/indicators'
 
 function Home(props) {
-  const { loading, data } = useSelector(state => state.Indicators)
+  const { data, loading } = useSelector(state => state.Indicators.list)
 
   const dispatch = useDispatch()
 
@@ -18,7 +18,7 @@ function Home(props) {
   return (
     <View>
       <ScrollView>
-        {Object.values(data).map((indicator, i) => (
+        {data.map((indicator, i) => (
           <IndicatorCard data={indicator} key={i} />
         ))}
       </ScrollView>
