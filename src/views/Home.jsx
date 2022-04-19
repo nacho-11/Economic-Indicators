@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 
+import { Skeleton } from '@rneui/themed'
 import { View, ScrollView } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -14,6 +15,14 @@ function Home(props) {
   useEffect(() => {
     dispatch(fetchIndicators())
   }, [dispatch])
+
+  if (loading) {
+    return (
+      <View>
+        <Skeleton variant="rectangular" width={'100%'} height={50} />
+      </View>
+    )
+  }
 
   return (
     <View>
