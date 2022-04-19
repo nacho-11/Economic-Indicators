@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { NavigationContainer } from '@react-navigation/native'
+import { ThemeProvider } from '@rneui/themed'
 import { Provider } from 'react-redux'
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
@@ -8,6 +9,7 @@ import thunk from 'redux-thunk'
 import * as reducers from './ducks'
 import AppNavigator from './navigation/AppNavigator'
 import services from './services'
+import myTheme from './styles/theme'
 
 const store = createStore(
   combineReducers({
@@ -20,7 +22,9 @@ function App(props) {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <AppNavigator />
+        <ThemeProvider theme={myTheme}>
+          <AppNavigator />
+        </ThemeProvider>
       </NavigationContainer>
     </Provider>
   )
