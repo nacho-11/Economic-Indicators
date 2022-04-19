@@ -1,7 +1,7 @@
 // Initial State
 const initialState = {
-  list: { data: [], loading: false },
-  indicatorValues: { data: {}, loading: false },
+  list: { data: [], loading: false, error: undefined },
+  indicatorValues: { data: {}, loading: false, error: undefined },
 }
 // Actions
 const SET_INDICATORS = 'INDICATORS/SET_INDICATORS'
@@ -33,10 +33,16 @@ export const setIndicatorValues = payload => ({
 
 // Thunks
 export const fetchIndicators = () => async (dispatch, getState, services) => {
-  dispatch(setIndicators({ data: [], loading: true }))
+  dispatch(setIndicators({ data: [], loading: true, error: undefined }))
   const { get, mindicadorApi } = services
 
-  const result = await get(mindicadorApi)
+  let result
+
+  try {
+    result = await get(mindicadorApi)
+  } catch (error) {
+    dispatch(setIndicators({ data: [], loading: false, error: true }))
+  }
 
   const data = []
 
@@ -45,16 +51,25 @@ export const fetchIndicators = () => async (dispatch, getState, services) => {
       data.push(result[key])
     }
   })
-  dispatch(setIndicators({ data, loading: false }))
+
+  dispatch(setIndicators({ data, loading: false, error: undefined }))
 }
 
 export const fetchIndicatorValues =
   payload => async (dispatch, getState, services) => {
-    dispatch(setIndicatorValues({ data: [], loading: true }))
+    dispatch(setIndicatorValues({ data: {}, loading: true, error: undefined }))
     const { get, mindicadorApi } = services
     const { indicator } = payload
 
-    const result = await get(`${mindicadorApi}/${indicator}`)
+    let result
 
-    dispatch(setIndicatorValues({ data: result, loading: false }))
+    try {
+      result = await get(`${mindicadorApi}/${indicator}`)
+    } catch (error) {
+      dispatch(setIndicatorValues({ data: {}, loading: false, error: true }))
+    }
+
+    dispatch(
+      setIndicatorValues({ data: result, loading: false, error: undefined }),
+    )
   }
