@@ -3,12 +3,14 @@ import React from 'react'
 import { ListItem } from '@rneui/themed'
 import PropTypes from 'prop-types'
 
+import styles from './styles'
+
 function IndicatorValueCard(props) {
   const { date, value } = props
   return (
     <ListItem bottomDivider>
-      <ListItem.Content>
-        <ListItem.Title>{date}</ListItem.Title>
+      <ListItem.Content style={styles.content}>
+        <ListItem.Title style={styles.date}>{date}</ListItem.Title>
         <ListItem.Title>{value}</ListItem.Title>
       </ListItem.Content>
     </ListItem>
