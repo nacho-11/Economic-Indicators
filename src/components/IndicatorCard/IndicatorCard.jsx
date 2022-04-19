@@ -5,6 +5,9 @@ import { ListItem, Icon } from '@rneui/themed'
 import PropTypes from 'prop-types'
 import { TouchableOpacity } from 'react-native'
 
+import { blue } from '../../styles/colors'
+import styles from './styles'
+
 function IndicatorCard(props) {
   const { name, unit, code } = props
   const navigation = useNavigation()
@@ -23,11 +26,16 @@ function IndicatorCard(props) {
       onPress={goIndicatorValues}
     >
       <ListItem.Content>
-        <ListItem.Title>{name}</ListItem.Title>
-        <ListItem.Subtitle>{unit}</ListItem.Subtitle>
+        <ListItem.Title style={styles.name}>{name}</ListItem.Title>
+        <ListItem.Subtitle style={styles.unit}>{unit}</ListItem.Subtitle>
       </ListItem.Content>
-      <Icon name="info" type="feather" onPress={goIndicatorDetails} />
-      <ListItem.Chevron />
+      <Icon
+        name="info"
+        type="feather"
+        onPress={goIndicatorDetails}
+        color={blue}
+      />
+      <Icon name="keyboard-arrow-right" type="material" color={blue} />
     </ListItem>
   )
 }
