@@ -1,12 +1,13 @@
-import { normalizeText } from '@rneui/base'
 import { StyleSheet } from 'react-native'
+
+import { normalizeFontSize } from '../styles/normalize'
 
 const styles = StyleSheet.create({
   mainTitle: {
-    fontSize: normalizeText(18),
+    fontSize: normalizeFontSize(16),
   },
   title: {
-    fontSize: normalizeText(16),
+    fontSize: normalizeFontSize(14),
   },
 })
 
