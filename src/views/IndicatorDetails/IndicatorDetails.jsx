@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react'
 
 import { Skeleton } from '@rneui/themed'
-import { ScrollView, Text, View } from 'react-native'
+import { Text, View } from 'react-native'
 import { LineChart } from 'react-native-chart-kit'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { IndicatorValueCard } from '../../components'
 import { fetchIndicatorValues } from '../../ducks/indicators'
 
 function IndicatorDetails(props) {
@@ -73,11 +72,6 @@ function IndicatorDetails(props) {
         height={220}
         chartConfig={chartConfig}
       />
-      <ScrollView>
-        {lastTenValues?.map((item, i) => (
-          <IndicatorValueCard fecha={item.fecha} valor={item.valor} key={i} />
-        ))}
-      </ScrollView>
     </View>
   )
 }
