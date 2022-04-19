@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react'
 
-import { Skeleton } from '@rneui/themed'
 import { ScrollView, Text, View } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { IndicatorValueCard } from '../../components'
+import { IndicatorValueCard, Loading } from '../../components'
 import { fetchIndicatorValues } from '../../ducks/indicators'
 import { formatDate } from '../../utils/date'
 
@@ -23,11 +22,7 @@ function IndicatorValues(props) {
   }, [dispatch, codigo])
 
   if (loading) {
-    return (
-      <View>
-        <Skeleton variant="rectangular" width={'100%'} height={50} />
-      </View>
-    )
+    return <Loading />
   }
 
   if (!data.nombre) {

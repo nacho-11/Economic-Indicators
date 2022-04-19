@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react'
 
-import { Skeleton } from '@rneui/themed'
 import { View, ScrollView } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { IndicatorCard } from '../components'
+import { IndicatorCard, Loading } from '../components'
 import { fetchIndicators } from '../ducks/indicators'
 
 function Home(props) {
@@ -17,11 +16,7 @@ function Home(props) {
   }, [dispatch])
 
   if (loading) {
-    return (
-      <View>
-        <Skeleton variant="rectangular" width={'100%'} height={50} />
-      </View>
-    )
+    return <Loading />
   }
 
   return (

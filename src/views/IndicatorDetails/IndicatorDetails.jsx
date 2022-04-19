@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 
-import { Skeleton, Text } from '@rneui/themed'
+import { Text } from '@rneui/themed'
 import { View } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -10,6 +10,7 @@ import {
   VictoryTheme,
 } from 'victory-native'
 
+import { Loading } from '../../components'
 import { fetchIndicatorValues } from '../../ducks/indicators'
 import { normalizePx, pWidth } from '../../styles/normalize'
 import { formatDate } from '../../utils/date'
@@ -33,11 +34,7 @@ function IndicatorDetails(props) {
   }, [dispatch, codigo])
 
   if (loading) {
-    return (
-      <View>
-        <Skeleton variant="rectangular" width={'100%'} height={50} />
-      </View>
-    )
+    return <Loading />
   }
 
   if (!data.nombre) {
