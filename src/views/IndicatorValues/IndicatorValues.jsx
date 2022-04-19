@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 
 import { Skeleton } from '@rneui/themed'
-import { ScrollView, View } from 'react-native'
+import { ScrollView, Text, View } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { IndicatorValueCard } from '../../components'
@@ -25,6 +25,14 @@ function IndicatorValues(props) {
     return (
       <View>
         <Skeleton variant="rectangular" width={'100%'} height={50} />
+      </View>
+    )
+  }
+
+  if (!data.nombre) {
+    return (
+      <View>
+        <Text>Sin datos</Text>
       </View>
     )
   }
