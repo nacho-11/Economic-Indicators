@@ -1,38 +1,24 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
-import { View, Text, Button, ActivityIndicator } from 'react-native'
+import { View, Text } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { fetchRandomCoffe } from '../ducks/coffe'
-import { incrementCounter } from '../ducks/count'
+import { fetchIndicators } from '../ducks/indicators'
 
 function Home(props) {
-  const { counter } = useSelector(state => state.Count)
-  const { loading, data } = useSelector(state => state.Coffe)
+  const { loading, data } = useSelector(state => state.Indicators)
+
+  console.log(data)
 
   const dispatch = useDispatch()
 
-  const increment = () => {
-    dispatch(incrementCounter(1))
-  }
-
-  const decrement = () => {
-    dispatch(incrementCounter(-1))
-  }
-
-  const getRandomCoffe = () => {
-    dispatch(fetchRandomCoffe())
-  }
+  useEffect(() => {
+    dispatch(fetchIndicators())
+  }, [dispatch])
 
   return (
     <View>
       <Text>Hello World!</Text>
-      <Text>Counter: {counter}</Text>
-      <Button onPress={increment} title="Increment" />
-      <Button onPress={decrement} title="Decrement" />
-      <Button onPress={getRandomCoffe} title="Get Coffe" />
-      {loading && <ActivityIndicator />}
-      {!loading && !!data.blend_name && <Text>{data.blend_name}</Text>}
     </View>
   )
 }
