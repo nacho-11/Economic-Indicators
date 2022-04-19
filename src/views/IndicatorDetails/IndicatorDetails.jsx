@@ -6,6 +6,7 @@ import { LineChart } from 'react-native-chart-kit'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { fetchIndicatorValues } from '../../ducks/indicators'
+import { formatDate } from '../../utils/date'
 
 function IndicatorDetails(props) {
   const { codigo } = props.route.params
@@ -64,7 +65,7 @@ function IndicatorDetails(props) {
     <View>
       <Text>${lastValue.valor}</Text>
       <Text>Nombre: {data.nombre}</Text>
-      <Text>Fecha: {lastValue.fecha}</Text>
+      <Text>Fecha: {formatDate(lastValue.fecha)}</Text>
       <Text>Unidad de medida: {data.unidad_medida}</Text>
       <LineChart
         data={dataChart}

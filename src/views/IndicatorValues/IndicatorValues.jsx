@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { IndicatorValueCard } from '../../components'
 import { fetchIndicatorValues } from '../../ducks/indicators'
+import { formatDate } from '../../utils/date'
 
 function IndicatorValues(props) {
   const { codigo } = props.route.params
@@ -41,7 +42,11 @@ function IndicatorValues(props) {
     <View>
       <ScrollView>
         {serie?.map((item, i) => (
-          <IndicatorValueCard date={item.fecha} value={item.valor} key={i} />
+          <IndicatorValueCard
+            date={formatDate(item.fecha)}
+            value={item.valor}
+            key={i}
+          />
         ))}
       </ScrollView>
     </View>
