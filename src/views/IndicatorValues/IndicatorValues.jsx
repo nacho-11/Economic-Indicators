@@ -3,13 +3,13 @@ import React, { useEffect } from 'react'
 import { ScrollView, Text, View } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { IndicatorValueCard, Loading } from '../../components'
+import { Error, IndicatorValueCard, Loading } from '../../components'
 import { fetchIndicatorValues } from '../../ducks/indicators'
 import { formatDate } from '../../utils/date'
 
 function IndicatorValues(props) {
   const { codigo } = props.route.params
-  const { data, loading } = useSelector(
+  const { data, loading, error } = useSelector(
     state => state.Indicators.indicatorValues,
   )
 
@@ -23,6 +23,10 @@ function IndicatorValues(props) {
 
   if (loading) {
     return <Loading />
+  }
+
+  if (error) {
+    return <Error />
   }
 
   if (!data.nombre) {

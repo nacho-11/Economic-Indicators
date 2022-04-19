@@ -10,7 +10,7 @@ import {
   VictoryTheme,
 } from 'victory-native'
 
-import { Loading } from '../../components'
+import { Error, Loading } from '../../components'
 import { fetchIndicatorValues } from '../../ducks/indicators'
 import { normalizePx, pWidth } from '../../styles/normalize'
 import { formatDate } from '../../utils/date'
@@ -21,7 +21,7 @@ const chartWidth = pWidth(1) - normalizePx(20) * 2
 
 function IndicatorDetails(props) {
   const { codigo } = props.route.params
-  const { data, loading } = useSelector(
+  const { data, loading, error } = useSelector(
     state => state.Indicators.indicatorValues,
   )
 
@@ -35,6 +35,9 @@ function IndicatorDetails(props) {
 
   if (loading) {
     return <Loading />
+  }
+  if (error) {
+    return <Error />
   }
 
   if (!data.nombre) {

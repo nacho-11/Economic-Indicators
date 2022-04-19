@@ -3,11 +3,11 @@ import React, { useEffect } from 'react'
 import { View, ScrollView } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { IndicatorCard, Loading } from '../components'
+import { Error, IndicatorCard, Loading } from '../components'
 import { fetchIndicators } from '../ducks/indicators'
 
 function Home(props) {
-  const { data, loading } = useSelector(state => state.Indicators.list)
+  const { data, loading, error } = useSelector(state => state.Indicators.list)
 
   const dispatch = useDispatch()
 
@@ -17,6 +17,10 @@ function Home(props) {
 
   if (loading) {
     return <Loading />
+  }
+
+  if (error) {
+    return <Error />
   }
 
   return (
