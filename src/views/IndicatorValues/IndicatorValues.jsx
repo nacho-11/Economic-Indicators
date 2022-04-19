@@ -14,7 +14,7 @@ function IndicatorValues(props) {
     state => state.Indicators.indicatorValues,
   )
 
-  const { serie } = data
+  const { serie, unidad_medida: unidadMedida } = data
 
   const dispatch = useDispatch()
 
@@ -45,6 +45,7 @@ function IndicatorValues(props) {
           <IndicatorValueCard
             date={formatDate(item.fecha)}
             value={item.valor}
+            unit={unidadMedida}
             key={i}
           />
         ))}
