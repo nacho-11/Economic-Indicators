@@ -10,6 +10,11 @@ function IndicatorCard(props) {
   const goIndicatorValues = () => {
     navigation.navigate('IndicatorValues', { codigo })
   }
+
+  const goIndicatorDetails = () => {
+    navigation.navigate('IndicatorDetails', { codigo })
+  }
+
   return (
     <ListItem
       Component={TouchableOpacity}
@@ -20,7 +25,7 @@ function IndicatorCard(props) {
         <ListItem.Title>{nombre}</ListItem.Title>
         <ListItem.Subtitle>{unidadMedida}</ListItem.Subtitle>
       </ListItem.Content>
-      <Icon name="info" type="feather" />
+      <Icon name="info" type="feather" onPress={goIndicatorDetails} />
       <ListItem.Chevron />
     </ListItem>
   )
