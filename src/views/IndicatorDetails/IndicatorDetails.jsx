@@ -2,8 +2,13 @@ import React, { useEffect } from 'react'
 
 import { Skeleton, Text } from '@rneui/themed'
 import { View } from 'react-native'
-import { LineChart } from 'react-native-chart-kit'
 import { useDispatch, useSelector } from 'react-redux'
+import {
+  VictoryAxis,
+  VictoryChart,
+  VictoryLine,
+  VictoryTheme,
+} from 'victory-native'
 
 import { fetchIndicatorValues } from '../../ducks/indicators'
 import { normalizePx, pWidth } from '../../styles/normalize'
@@ -45,26 +50,7 @@ function IndicatorDetails(props) {
 
   const lastValue = serie[0]
 
-  const lastTenValues = serie.slice(0, 10)
-
-  const dataChart = {
-    labels: lastTenValues.map(value => value.fecha),
-    datasets: [
-      {
-        data: lastTenValues.map(value => value.valor),
-        color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
-        strokeWidth: 2, // optional
-      },
-    ],
-    legend: ['Last values'], // optional
-  }
-
-  const chartConfig = {
-    color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
-    strokeWidth: 2, // optional, default 3
-    barPercentage: 0.5,
-    useShadowColorFromDataset: false, // optional
-  }
+  const lastTenValues = serie.slice(0, 10).reverse()
 
   return (
     <View style={styles.container}>
@@ -84,12 +70,26 @@ function IndicatorDetails(props) {
           <Text style={styles.textValue}>{data.unidad_medida}</Text>
         </Text>
       </View>
-      <LineChart
-        data={dataChart}
+      <VictoryChart
+        animate={{
+          duration: 1000,
+          onLoad: { duration: 500 },
+        }}
         width={chartWidth}
-        height={220}
-        chartConfig={chartConfig}
-      />
+        theme={VictoryTheme.material}
+      >
+        <VictoryAxis dependentAxis label="Valor" style={styles.axisY} />
+        <VictoryAxis
+          label="Fecha"
+          fixLabelOverlap={true}
+          style={styles.axisX}
+        />
+        <VictoryLine
+          data={lastTenValues}
+          x={item => formatDate(item.fecha)}
+          y="valor"
+        />
+      </VictoryChart>
     </View>
   )
 }

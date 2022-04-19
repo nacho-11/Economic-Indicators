@@ -27,6 +27,29 @@ const styles = StyleSheet.create({
     fontSize: normalizeFontSize(14),
     color: blue,
   },
+  axisY: {
+    axis: { stroke: blue },
+    axisLabel: {
+      fontSize: normalizeFontSize(14),
+      padding: normalizePx(40),
+    },
+    grid: { stroke: blue },
+    tickLabels: {
+      fontSize: normalizeFontSize(8),
+      padding: 1,
+    },
+  },
+  axisX: {
+    axis: { stroke: blue },
+    axisLabel: {
+      fontSize: normalizeFontSize(14),
+      padding: normalizePx(28),
+    },
+    grid: { stroke: blue },
+    tickLabels: {
+      fontSize: normalizeFontSize(8),
+    },
+  },
 })
 
 export default styles
