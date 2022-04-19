@@ -41,7 +41,7 @@ function IndicatorValues(props) {
     <View>
       <ScrollView>
         {serie?.map((item, i) => (
-          <IndicatorValueCard fecha={item.fecha} valor={item.valor} key={i} />
+          <IndicatorValueCard date={item.fecha} value={item.valor} key={i} />
         ))}
       </ScrollView>
     </View>

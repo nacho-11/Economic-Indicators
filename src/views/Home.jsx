@@ -19,7 +19,12 @@ function Home(props) {
     <View>
       <ScrollView>
         {data.map((indicator, i) => (
-          <IndicatorCard data={indicator} key={i} />
+          <IndicatorCard
+            name={indicator.nombre}
+            unit={indicator.unidad_medida}
+            code={indicator.codigo}
+            key={i}
+          />
         ))}
       </ScrollView>
     </View>
