@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 
-import { View, ScrollView } from 'react-native'
+import { ScrollView, RefreshControl } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { Error, IndicatorCard, Loading } from '../components'
@@ -11,31 +11,46 @@ function Home(props) {
 
   const dispatch = useDispatch()
 
+  const getIndicators = useCallback(
+    () => dispatch(fetchIndicators()),
+    [dispatch],
+  )
+
   useEffect(() => {
-    dispatch(fetchIndicators())
-  }, [dispatch])
+    getIndicators()
+  }, [getIndicators])
 
   if (loading) {
     return <Loading />
   }
 
   if (error) {
-    return <Error />
+    return (
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={loading} onRefresh={getIndicators} />
+        }
+      >
+        <Error />
+      </ScrollView>
+    )
   }
 
   return (
-    <View>
-      <ScrollView>
-        {data.map((indicator, i) => (
-          <IndicatorCard
-            name={indicator.nombre}
-            unit={indicator.unidad_medida}
-            code={indicator.codigo}
-            key={i}
-          />
-        ))}
-      </ScrollView>
-    </View>
+    <ScrollView
+      refreshControl={
+        <RefreshControl refreshing={loading} onRefresh={getIndicators} />
+      }
+    >
+      {data.map((indicator, i) => (
+        <IndicatorCard
+          name={indicator.nombre}
+          unit={indicator.unidad_medida}
+          code={indicator.codigo}
+          key={i}
+        />
+      ))}
+    </ScrollView>
   )
 }
 

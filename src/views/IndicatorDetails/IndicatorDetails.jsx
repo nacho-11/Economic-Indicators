@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 
 import { Text } from '@rneui/themed'
-import { View } from 'react-native'
+import { RefreshControl, ScrollView, View } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   VictoryAxis,
@@ -29,22 +29,27 @@ function IndicatorDetails(props) {
 
   const dispatch = useDispatch()
 
+  const getIndicatorValues = useCallback(
+    () => dispatch(fetchIndicatorValues({ indicator: codigo })),
+    [dispatch, codigo],
+  )
+
   useEffect(() => {
-    dispatch(fetchIndicatorValues({ indicator: codigo }))
-  }, [dispatch, codigo])
+    getIndicatorValues()
+  }, [getIndicatorValues])
 
   if (loading) {
     return <Loading />
   }
   if (error) {
-    return <Error />
-  }
-
-  if (!data.nombre) {
     return (
-      <View>
-        <Text>Sin datos</Text>
-      </View>
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={loading} onRefresh={getIndicatorValues} />
+        }
+      >
+        <Error />
+      </ScrollView>
     )
   }
 
@@ -53,7 +58,12 @@ function IndicatorDetails(props) {
   const lastTenValues = serie.slice(0, 10).reverse()
 
   return (
-    <View style={styles.container}>
+    <ScrollView
+      style={styles.container}
+      refreshControl={
+        <RefreshControl refreshing={loading} onRefresh={getIndicatorValues} />
+      }
+    >
       <View style={styles.informationContainer}>
         <Text style={styles.value}>
           {formatNumber(lastValue.valor, unidadMedida)}
@@ -90,7 +100,7 @@ function IndicatorDetails(props) {
           y="valor"
         />
       </VictoryChart>
-    </View>
+    </ScrollView>
   )
 }
 

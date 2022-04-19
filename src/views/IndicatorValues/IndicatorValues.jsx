@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 
-import { ScrollView, Text, View } from 'react-native'
+import { RefreshControl, ScrollView } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { Error, IndicatorValueCard, Loading } from '../../components'
@@ -17,39 +17,46 @@ function IndicatorValues(props) {
 
   const dispatch = useDispatch()
 
+  const getIndicatorValues = useCallback(
+    () => dispatch(fetchIndicatorValues({ indicator: codigo })),
+    [dispatch, codigo],
+  )
+
   useEffect(() => {
-    dispatch(fetchIndicatorValues({ indicator: codigo }))
-  }, [dispatch, codigo])
+    getIndicatorValues()
+  }, [getIndicatorValues])
 
   if (loading) {
     return <Loading />
   }
 
   if (error) {
-    return <Error />
-  }
-
-  if (!data.nombre) {
     return (
-      <View>
-        <Text>Sin datos</Text>
-      </View>
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={loading} onRefresh={getIndicatorValues} />
+        }
+      >
+        <Error />
+      </ScrollView>
     )
   }
 
   return (
-    <View>
-      <ScrollView>
-        {serie?.map((item, i) => (
-          <IndicatorValueCard
-            date={formatDate(item.fecha)}
-            value={item.valor}
-            unit={unidadMedida}
-            key={i}
-          />
-        ))}
-      </ScrollView>
-    </View>
+    <ScrollView
+      refreshControl={
+        <RefreshControl refreshing={loading} onRefresh={getIndicatorValues} />
+      }
+    >
+      {serie?.map((item, i) => (
+        <IndicatorValueCard
+          date={formatDate(item.fecha)}
+          value={item.valor}
+          unit={unidadMedida}
+          key={i}
+        />
+      ))}
+    </ScrollView>
   )
 }
 
