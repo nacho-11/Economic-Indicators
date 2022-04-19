@@ -1,12 +1,17 @@
 import React, { useEffect } from 'react'
 
-import { Skeleton } from '@rneui/themed'
-import { Text, View } from 'react-native'
+import { Skeleton, Text } from '@rneui/themed'
+import { View } from 'react-native'
 import { LineChart } from 'react-native-chart-kit'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { fetchIndicatorValues } from '../../ducks/indicators'
+import { normalizePx, pWidth } from '../../styles/normalize'
 import { formatDate } from '../../utils/date'
+import { formatNumber } from '../../utils/number'
+import styles from './styles'
+
+const chartWidth = pWidth(1) - normalizePx(20) * 2
 
 function IndicatorDetails(props) {
   const { codigo } = props.route.params
@@ -14,7 +19,7 @@ function IndicatorDetails(props) {
     state => state.Indicators.indicatorValues,
   )
 
-  const { serie } = data
+  const { unidad_medida: unidadMedida, serie } = data
 
   const dispatch = useDispatch()
 
@@ -62,14 +67,26 @@ function IndicatorDetails(props) {
   }
 
   return (
-    <View>
-      <Text>${lastValue.valor}</Text>
-      <Text>Nombre: {data.nombre}</Text>
-      <Text>Fecha: {formatDate(lastValue.fecha)}</Text>
-      <Text>Unidad de medida: {data.unidad_medida}</Text>
+    <View style={styles.container}>
+      <View style={styles.informationContainer}>
+        <Text style={styles.value}>
+          {formatNumber(lastValue.valor, unidadMedida)}
+        </Text>
+        <Text style={styles.textName}>
+          Nombre: <Text style={styles.textValue}>{data.nombre}</Text>
+        </Text>
+        <Text style={styles.textName}>
+          Fecha:{' '}
+          <Text style={styles.textValue}>{formatDate(lastValue.fecha)}</Text>
+        </Text>
+        <Text style={styles.textName}>
+          Unidad de medida:{' '}
+          <Text style={styles.textValue}>{data.unidad_medida}</Text>
+        </Text>
+      </View>
       <LineChart
         data={dataChart}
-        width={400}
+        width={chartWidth}
         height={220}
         chartConfig={chartConfig}
       />
