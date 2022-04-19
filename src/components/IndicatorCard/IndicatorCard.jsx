@@ -9,11 +9,11 @@ function IndicatorCard(props) {
   const { name, unit, code } = props
   const navigation = useNavigation()
   const goIndicatorValues = () => {
-    navigation.navigate('IndicatorValues', { codigo: code })
+    navigation.navigate('IndicatorValues', { codigo: code, title: name })
   }
 
   const goIndicatorDetails = () => {
-    navigation.navigate('IndicatorDetails', { codigo: code })
+    navigation.navigate('IndicatorDetails', { codigo: code, title: name })
   }
 
   return (
