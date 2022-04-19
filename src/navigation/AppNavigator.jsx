@@ -3,6 +3,7 @@ import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 import Home from '../views/Home'
+import IndicatorDetails from '../views/IndicatorDetails/IndicatorDetails'
 import IndicatorValues from '../views/IndicatorValues/IndicatorValues'
 
 const AppStack = createNativeStackNavigator()
@@ -12,6 +13,7 @@ function AppNavigator() {
     <AppStack.Navigator>
       <AppStack.Screen name="Home" component={Home} />
       <AppStack.Screen name="IndicatorValues" component={IndicatorValues} />
+      <AppStack.Screen name="IndicatorDetails" component={IndicatorDetails} />
     </AppStack.Navigator>
   )
 }
